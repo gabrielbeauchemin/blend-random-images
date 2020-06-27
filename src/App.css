@@ -1,0 +1,26 @@
+.App {
+  text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.Generate {
+  width: 45%;
+}
+
+#imgsContainer {
+  position: relative;
+  width: 800px;
+  height: 600px;
+}
