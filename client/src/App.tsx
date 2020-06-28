@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import html2canvas from "html2canvas";
 
 function App() {
   return (
@@ -46,6 +47,8 @@ function App() {
         <div id="imgsContainer">
           <img width="800px" height="600px" alt="" />
         </div>
+        <br/>
+        <button className='downloadImg' onClick={downloadImg}> Download Image </button>
       </div>
     </>
   );
@@ -137,6 +140,39 @@ function getRandoms(quantity: number, min: number, max: number): number[] {
 function getRandom(min: number, max: number): number {
   // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function downloadImg() {
+  html2canvas(document.querySelector("#imgsContainer") as HTMLElement).then(
+    (canvas) => {
+      downloadCanvas(canvas, "generatedImage.png")
+    }
+  );
+}
+
+function downloadCanvas(canvas : HTMLCanvasElement, filename: string) {
+  /// create an "off-screen" anchor tag
+  var lnk = document.createElement('a'), e;
+
+  /// the key here is to set the download attribute of the a tag
+  lnk.download = filename;
+
+  /// convert canvas content to data-uri for link. When download
+  /// attribute is set the content pointed to by link will be
+  /// pushed as "download" in HTML5 capable browsers
+  lnk.href = canvas.toDataURL("image/png;base64");
+
+  /// create a "fake" click-event to trigger the download
+  if (document.createEvent) {
+    e = document.createEvent("MouseEvents");
+    e.initMouseEvent("click", true, true, window,
+                     0, 0, 0, 0, 0, false, false, false,
+                     false, 0, null);
+
+    lnk.dispatchEvent(e);
+  } else{
+    lnk.click();
+  }
 }
 
 export default App;
